@@ -47,9 +47,11 @@ import static com.prolificinteractive.materialcalendarview.MaterialCalendarView.
   private boolean isDecoratedDisabled = false;
   @ShowOtherDates
   private int showOtherDates = MaterialCalendarView.SHOW_DEFAULTS;
+  private int dayViewOffset;
 
-  public DayView(Context context, CalendarDay day) {
+  public DayView(Context context, CalendarDay day, int dayViewOffset) {
     super(context);
+    this.dayViewOffset = dayViewOffset;
 
     fadeTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
@@ -288,7 +290,7 @@ import static com.prolificinteractive.materialcalendarview.MaterialCalendarView.
 
   private void calculateBounds(int width, int height) {
     final int radius = Math.min(height, width);
-    final int offset = Math.abs(height - width) / 2;
+    final int offset = dayViewOffset > -1 ? dayViewOffset : Math.abs(height - width) / 2;
 
     // Lollipop platform bug. Circle drawable offset needs to be half of normal offset
     final int circleOffset =

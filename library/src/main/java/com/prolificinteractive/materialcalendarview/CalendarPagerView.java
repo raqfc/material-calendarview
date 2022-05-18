@@ -37,6 +37,7 @@ abstract class CalendarPagerView extends ViewGroup
   private CalendarDay minDate = null;
   private CalendarDay maxDate = null;
   protected boolean showWeekDays;
+  protected int dayViewOffset;
 
   private final Collection<DayView> dayViews = new ArrayList<>();
 
@@ -44,13 +45,15 @@ abstract class CalendarPagerView extends ViewGroup
       @NonNull MaterialCalendarView view,
       CalendarDay firstViewDay,
       DayOfWeek firstDayOfWeek,
-      boolean showWeekDays) {
+      boolean showWeekDays,
+      int dayViewOffset) {
     super(view.getContext());
 
     this.mcv = view;
     this.firstViewDay = firstViewDay;
     this.firstDayOfWeek = firstDayOfWeek;
     this.showWeekDays = showWeekDays;
+    this.dayViewOffset = dayViewOffset;
 
     setClipChildren(false);
     setClipToPadding(false);
@@ -76,7 +79,7 @@ abstract class CalendarPagerView extends ViewGroup
 
   protected void addDayView(Collection<DayView> dayViews, LocalDate temp) {
     CalendarDay day = CalendarDay.from(temp);
-    DayView dayView = new DayView(getContext(), day);
+    DayView dayView = new DayView(getContext(), day, dayViewOffset);
     dayView.setOnClickListener(this);
     dayView.setOnLongClickListener(this);
     dayViews.add(dayView);
